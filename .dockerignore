@@ -1,0 +1,19 @@
+# Local development artifacts
+.dockerignore
+.gitignore
+.git/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Local database (if using SQLite for development)
+db.sqlite3
+
+# Environment variables (if not handled securely in production)
+.env
+.env.*
+
+# Media and static files (if served externally in production)
+/mediafiles/
+/staticfiles/

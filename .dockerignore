@@ -17,3 +17,5 @@ db.sqlite3
 # Media and static files (if served externally in production)
 /mediafiles/
 /staticfiles/
+
+seed.py

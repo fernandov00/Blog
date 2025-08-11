@@ -4,11 +4,15 @@ from blog import views
 app_name = 'blog'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('post/<slug:slug>/', views.post, name='post'),
-    path('page/<slug:slug>/', views.page, name='page'),
-    path('created_by/<int:id>/', views.created_by, name='created_by'),
-    path('category/<slug:slug>/', views.category, name='category'),
-    path('tag/<slug:slug>/', views.tag, name='tag'),
-    path('search/', views.search, name='search'),
+    path('', views.PostListView.as_view(), name='index'),
+    path('post/<slug:slug>/', views.PostDetailView.as_view(), name='post'),
+    path('page/<slug:slug>/', views.PageDetailView.as_view(), name='page'),
+    path('created_by/<int:id>/', views.CreatedByListView.as_view(),
+          name='created_by'),
+    path('category/<slug:slug>/', views.CategoryListView.as_view(), name='category'),
+    path('tag/<slug:slug>/', views.TagListView.as_view(), name='tag'),
+    path('search/', views.SearchListView.as_view(), name='search'),
 ]
+
+# sempre que usar CBV, adicionar .as_view() na url, pois a path() 
+# espera um callable

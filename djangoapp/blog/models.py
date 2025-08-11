@@ -1,6 +1,5 @@
 from django.db import models
 from utils.rands import slugify_new
-from side_setup.models import SiteSetup
 from django.contrib.auth.models import User
 from utils.img_resizer import resize_img
 from django_summernote.models import AbstractAttachment
@@ -85,16 +84,23 @@ class Page(models.Model):
         if not self.slug:
             self.slug = slugify_new(self.title, 4)
         return super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        if not self.is_published:
+            return reverse('blog:index')
+        return reverse('blog:page', args=(self.slug,))
 
     def __str__(self) -> str:
         return self.title
     
     
 
+
 class PostManager(models.Manager):
     def get_published(self):
         return self.filter(is_published=True).order_by('-pk')
     
+
 
 class Post(models.Model):
 
@@ -103,7 +109,6 @@ class Post(models.Model):
         verbose_name_plural = 'Posts'
 
     objects = PostManager()
-
 
     title = models.CharField(max_length=65,)
     slug = models.SlugField(
@@ -145,6 +150,8 @@ class Post(models.Model):
         default=None,
     )
     tags = models.ManyToManyField(Tag, blank=True, default='')
+
+
 
     def __str__(self):
         return self.title
